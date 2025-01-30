@@ -10,9 +10,13 @@ const App = () => {
 
     const generatePlaylist = async () => {
         try {
-            const tracks = ["Imagine - John Lennon", "Bohemian Rhapsody - Queen"];
-            const response = await axios.post(`${API_BASE_URL}/generate-playlist`, { tracks });
-            setPlaylist(response.data.recommendations);
+            const response = await axios.get("https://api.spotify.com/v1/me/tracks?limit=5", {
+                headers: { Authorization: `Bearer ${accessToken}` }
+            });
+            const tracks = response.data.items.map(item => `${item.track.name} - ${item.track.artists[0].name}`);
+
+            const playlistResponse = await axios.post(`${API_BASE_URL}/generate-playlist`, { tracks });
+            setPlaylist(playlistResponse.data.recommendations);
         } catch (error) {
             console.error("Error generating playlist:", error);
         }
