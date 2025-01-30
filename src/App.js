@@ -9,8 +9,8 @@ const App = () => {
     const [userName, setUserName] = useState(null);
 
     const generatePlaylist = async () => {
-        const tracks = ["Imagine - John Lennon", "Bohemian Rhapsody - Queen"];
         try {
+            const tracks = ["Imagine - John Lennon", "Bohemian Rhapsody - Queen"];
             const response = await axios.post(`${API_BASE_URL}/generate-playlist`, { tracks });
             setPlaylist(response.data.recommendations);
         } catch (error) {
@@ -44,7 +44,7 @@ const App = () => {
         <div
             style={{
                 backgroundImage: `url(${BACKGROUND_IMAGE_URL})`,
-                backgroundSize: "contain",  // "contain" ensures the entire image fits within the viewport
+                backgroundSize: "contain", // "contain" ensures the entire image fits within the viewport
                 backgroundRepeat: "no-repeat", // Prevent the image from repeating
                 backgroundPosition: "center center", // Keep the image centered
                 minHeight: "100vh", // Make sure it takes up the full viewport height
@@ -57,11 +57,21 @@ const App = () => {
             {userName && <h2>Welcome, {userName}</h2>}
             <button onClick={handleLogin}>Login</button>
             <button onClick={generatePlaylist}>Generate Playlist</button>
-            <ul>
-                {playlist.map((song, index) => (
-                    <li key={index}>{song}</li>
+            <div style={{ marginTop: "20px", textAlign: "left" }}>
+                {playlist.map((track, index) => (
+                    <div key={index} style={{ display: "flex", alignItems: "center", marginBottom: "10px" }}>
+                        <img
+                            src={track.albumArt || "https://via.placeholder.com/50"}
+                            alt={`${track.name} album art`}
+                            style={{ width: "50px", height: "50px", marginRight: "10px", borderRadius: "4px" }}
+                        />
+                        <div>
+                            <div style={{ fontWeight: "bold", fontSize: "14px" }}>{track.name}</div>
+                            <div style={{ fontSize: "12px", color: "gray" }}>{track.artist}</div>
+                        </div>
+                    </div>
                 ))}
-            </ul>
+            </div>
         </div>
     );
 };
