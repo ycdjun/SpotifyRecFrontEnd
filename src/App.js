@@ -44,9 +44,10 @@ const App = () => {
         <div
             style={{
                 backgroundImage: `url(${BACKGROUND_IMAGE_URL})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                minHeight: "100vh",
+                backgroundSize: "contain",  // "contain" ensures the entire image fits within the viewport
+                backgroundRepeat: "no-repeat", // Prevent the image from repeating
+                backgroundPosition: "center center", // Keep the image centered
+                minHeight: "100vh", // Make sure it takes up the full viewport height
                 color: "white",
                 textAlign: "center",
                 padding: "20px",
